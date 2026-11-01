@@ -1,0 +1,10 @@
+import http from 'node:http';
+import {readFile,stat} from 'node:fs/promises';
+import {resolve,extname,sep} from 'node:path';
+import {fileURLToPath} from 'node:url';
+import {execFile} from 'node:child_process';
+const root=fileURLToPath(new URL('.',import.meta.url)),port=Number(process.env.AI_WISH_PORT||8847);
+const types={'.html':'text/html; charset=utf-8','.js':'text/javascript; charset=utf-8','.mjs':'text/javascript; charset=utf-8','.css':'text/css; charset=utf-8','.png':'image/png','.svg':'image/svg+xml','.md':'text/plain; charset=utf-8'};
+const server=http.createServer(async(req,res)=>{try{let path=decodeURIComponent(new URL(req.url,'http://localhost').pathname);if(path.split('/').some(p=>p.startsWith('.'))){res.writeHead(404);res.end();return;}const file=resolve(root,'.'+path+(path.endsWith('/')?'index.html':''));if(!file.startsWith(resolve(root)+sep)){res.writeHead(403);res.end();return;}if(!(await stat(file)).isFile())throw Error();res.writeHead(200,{'Content-Type':types[extname(file)]||'application/octet-stream','Cache-Control':'no-cache','X-Content-Type-Options':'nosniff'});res.end(await readFile(file));}catch{res.writeHead(404);res.end('Not found');}});
+server.listen(port,'127.0.0.1',()=>{const url=`http://127.0.0.1:${port}`;console.log(`AI Wish: ${url}`);if(process.argv.includes('--open')&&process.platform==='win32')execFile('rundll32.exe',['url.dll,FileProtocolHandler',url],{windowsHide:true},()=>{});});
+server.on('error',error=>{console.error(error.message);process.exitCode=1;});

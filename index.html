@@ -1,0 +1,68 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+  <meta name="theme-color" content="#172238">
+  <meta name="description" content="AI 星愿：八位 AI 角色与独立专武的原神式祈愿模拟器。单抽、十连、星光旅程与本机收藏。">
+  <title>AI 星愿 · 与可能相遇</title>
+  <link rel="icon" href="./favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="./styles.css">
+  <link rel="preload" href="./assets/chatgpt-character.png" as="image">
+  <link rel="preload" href="./assets/cloud-sky.png" as="image">
+  <script type="module" src="./app.js"></script>
+</head>
+<body>
+<main id="app">
+  <div class="sky"><div class="sky-light"></div><div class="cloud cloud-one"></div><div class="cloud cloud-two"></div><div class="orbit orbit-one"></div><div class="orbit orbit-two"></div><span class="sky-star s1">✦</span><span class="sky-star s2">✧</span><span class="sky-star s3">✦</span></div>
+  <header class="topbar">
+    <a class="brand" href="./" aria-label="AI星愿首页"><span class="brand-mark">✧</span><span>AI 星愿<small>ASTRAL WISH</small></span></a>
+    <nav class="pool-tabs" aria-label="祈愿类型"><button class="active" data-pool="character" aria-pressed="true"><span>✧</span>角色祈愿</button><button data-pool="weapon" aria-pressed="false"><span>◇</span>专武祈愿</button></nav>
+    <div class="top-actions"><span class="unlimited"><span>✦</span> 无尽星愿</span><button class="icon-button" id="sound-button" title="关闭音效" aria-label="关闭音效">♫</button><button class="icon-button" id="fullscreen-button" title="全屏" aria-label="切换全屏">⛶</button></div>
+  </header>
+
+  <section class="home" id="home" aria-label="祈愿主页">
+    <div class="side-rail" id="ai-selector" aria-label="选择主推AI"></div>
+    <div class="banner-copy">
+      <p class="eyebrow"><span class="thin-line"></span><span id="pool-caption">角色活动祈愿</span><span class="season-tag">常驻星海</span></p>
+      <h1 id="banner-title">万象织序</h1>
+      <p class="banner-english">A WISH BEYOND THE ORDINARY</p>
+      <div class="title-rule"><i></i><b>✧</b><i></i></div>
+      <p class="quote" id="banner-quote">让每一种可能，都有回应。</p>
+      <div class="featured-label"><span>本期主推</span><strong id="featured-name">ChatGPT</strong><div class="five-stars">★★★★★</div></div>
+      <p class="character-tags" id="character-tags">白银龙裔 · 万象之章</p>
+      <button class="text-link" id="rules-button">祈愿说明 <span>↗</span></button>
+    </div>
+    <div class="hero-wrap" id="hero-wrap"><div class="hero-halo"></div><div class="hero-glyph" aria-hidden="true">✧</div><img class="hero-art" id="hero-art" src="./assets/chatgpt-character.png" alt="ChatGPT 角色立绘" fetchpriority="high"><div class="hero-caption"><span id="hero-number">01 / 08</span><span id="hero-caption">THE WEAVER OF POSSIBILITIES</span></div></div>
+    <aside class="collection-teaser"><span class="small-label">星海邂逅</span><strong id="collection-counter">0 <small>/ 16</small></strong><span>五星收藏</span></aside>
+  </section>
+
+  <footer class="bottom-bar" id="bottom-bar">
+    <div class="utility-nav"><button id="history-button"><span>◷</span>祈愿记录</button><button id="collection-button"><span>▤</span>星海图鉴</button><button id="settings-button" aria-label="设置"><span>⚙</span></button></div>
+    <div class="pity-panel"><div><span class="pity-label">下一次五星</span><strong id="pity-number">20 <small>抽以内</small></strong></div><div class="pity-dots" id="pity-dots" aria-hidden="true"></div><p id="guarantee-label">五星主推命中率 50%</p></div>
+    <div class="wish-buttons"><button class="wish-button single" id="single-button"><span class="wish-icon">✧</span><span>祈愿一次<small>与星光相遇</small></span><span class="key-hint">1</span></button><button class="wish-button ten" id="ten-button"><span class="wish-icon">✦</span><span>祈愿十次<small>至少获得四星或以上</small></span><span class="key-hint">0</span></button></div>
+  </footer>
+  <div class="home-footnote">原创概率 · 20 抽五星保底 · 无限祈愿</div>
+
+  <section class="experience" id="experience" hidden aria-label="祈愿揭晓">
+    <iframe id="wish-animation" src="./wish-scene.html" title="云海与流星祈愿动画" allow="autoplay" tabindex="-1"></iframe>
+    <button class="skip-button" id="skip-button">跳过 <span>››</span></button>
+    <div class="reveal-stage" id="reveal-stage" hidden>
+      <div class="reveal-halo"></div><div class="reveal-rays"></div>
+      <img class="reveal-silhouette" id="reveal-silhouette" alt="" hidden>
+      <img class="reveal-wish-image" id="reveal-wish-image" alt="" hidden>
+      <div class="filler-reveal" id="filler-reveal" hidden><div class="filler-sprite" id="filler-reveal-sprite"></div><div class="filler-copy"><span class="small-label">星海馈赠</span><h2 id="filler-name"></h2><div id="filler-stars" class="five-stars"></div><p id="filler-description"></p></div></div>
+      <div class="reveal-top"><span id="reveal-count"></span><span class="new-tag" id="new-tag" hidden>NEW</span></div>
+      <button class="continue-button" id="continue-button">点击继续 <span>›</span></button>
+      <button class="overview-link" id="overview-link">查看全部结果</button>
+    </div>
+    <div class="overview" id="overview" hidden><p class="eyebrow">星光已至</p><h2>本次祈愿结果</h2><div class="result-cards" id="result-cards"></div><p class="overview-subtitle">每一次相遇，都是新的可能。</p><button class="pill-button" id="close-result">收下星光 <span>↵</span></button></div>
+  </section>
+
+  <dialog id="panel-dialog" class="panel-dialog"><div class="panel-header"><div><p class="small-label" id="panel-kicker">ASTRAL ARCHIVE</p><h2 id="panel-title"></h2></div><button class="icon-button close-panel" aria-label="关闭窗口">×</button></div><div class="panel-content" id="panel-content"></div></dialog>
+  <div id="toast" class="toast" role="status" aria-live="polite" hidden></div>
+  <div class="rotate-prompt"><span>⤾</span><h2>横过屏幕，走进星海</h2><p>旋转手机后，继续你的祈愿。</p></div>
+  <noscript><div class="noscript">请启用浏览器 JavaScript 后体验抽卡。</div></noscript>
+</main>
+</body>
+</html>
